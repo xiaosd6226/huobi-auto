@@ -26,7 +26,7 @@ public class TradeTask implements Serializable {
 
     private Integer tickSeconds;
 
-    private BigDecimal priceChangeThresholdPeriodPercent;
+    private BigDecimal priceChangeThresholdPercent;
 
     public String getId() {
         return id;
@@ -76,11 +76,11 @@ public class TradeTask implements Serializable {
         this.tickSeconds = tickSeconds;
     }
 
-    public BigDecimal getPriceChangeThresholdPeriodPercent() {
-        return priceChangeThresholdPeriodPercent;
+    public BigDecimal getPriceChangeThresholdPercent() {
+        return priceChangeThresholdPercent;
     }
 
-    public void setPriceChangeThresholdPeriodPercent(BigDecimal priceChangeThresholdPeriodPercent) {
-        this.priceChangeThresholdPeriodPercent = priceChangeThresholdPeriodPercent;
+    public void setPriceChangeThresholdPercent(BigDecimal priceChangeThresholdPercent) {
+        this.priceChangeThresholdPercent = priceChangeThresholdPercent;
     }
 }
