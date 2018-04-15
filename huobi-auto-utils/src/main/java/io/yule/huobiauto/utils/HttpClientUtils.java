@@ -27,7 +27,7 @@ public final class HttpClientUtils {
             .setConnectionRequestTimeout(5000)
             .build();
 
-    public ThreadLocal<HttpClient> createHttpClientThreadLocal() {
+    public static ThreadLocal<HttpClient> createHttpClientThreadLocal() {
         return ThreadLocal.withInitial(() -> HttpClientBuilder
                 .create()
                 .setDefaultRequestConfig(HC_REQ_CFG)
@@ -35,7 +35,7 @@ public final class HttpClientUtils {
     }
 
 
-    public CloseableHttpResponse executeWithRetry(HttpClient hc, HttpUriRequest req, int retryTimes) {
+    public static CloseableHttpResponse executeWithRetry(HttpClient hc, HttpUriRequest req, int retryTimes) {
 
         CloseableHttpResponse resp;
         for (int i = 0; i < retryTimes; i++) {
@@ -57,7 +57,7 @@ public final class HttpClientUtils {
         return null;
     }
 
-    public JSONObject parseResponse(CloseableHttpResponse response) throws IOException {
+    public static JSONObject parseResponse(CloseableHttpResponse response) throws IOException {
         StringWriter sw = new StringWriter();
         IOUtils.copy(response.getEntity().getContent(), sw, "utf-8");
         sw.flush();
@@ -65,7 +65,7 @@ public final class HttpClientUtils {
         return JSON.parseObject(sw.toString());
     }
 
-    public void closeResp(CloseableHttpResponse response) {
+    public static void closeResp(CloseableHttpResponse response) {
         if (response != null) {
             try {
                 response.close();

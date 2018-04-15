@@ -12,6 +12,7 @@
         <module>huobi-auto-entity</module>
         <module>huobi-auto-dao</module>
         <module>huobi-auto-utils</module>
+        <module>huobi-auto-service</module>
     </modules>
 
     <packaging>pom</packaging>
