@@ -9,8 +9,7 @@
     <version>1.0.0</version>
     <modules>
         <module>huobi-auto-app</module>
-        <module>huobi-auto-config</module>
-        <module>huobi-auto-center</module>
+        <module>huobi-auto-entity</module>
     </modules>
 
     <packaging>pom</packaging>
@@ -32,6 +31,15 @@
 
     </dependencies>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-jpa</artifactId>
+                <version>1.5.9.RELEASE</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
