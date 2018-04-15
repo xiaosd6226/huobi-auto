@@ -9,6 +9,8 @@
     <version>1.0.0</version>
     <modules>
         <module>huobi-auto-app</module>
+        <module>huobi-auto-config</module>
+        <module>huobi-auto-center</module>
     </modules>
 
     <packaging>pom</packaging>
@@ -18,6 +20,17 @@
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>1.5.11.RELEASE</version>
     </parent>
+
+
+    <dependencies>
+        <!-- https://mvnrepository.com/artifact/org.springframework.cloud/spring-cloud-starter -->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter</artifactId>
+            <version>1.3.2.RELEASE</version>
+        </dependency>
+
+    </dependencies>
 
 
     <properties>

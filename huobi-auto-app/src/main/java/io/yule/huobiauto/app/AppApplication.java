@@ -7,8 +7,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * Created by chensijiang on 2018/4/14 下午12:50.
  */
 @SpringBootApplication
-public class Application {
+public class AppApplication {
     public static void main(String[] args) throws Exception {
-        SpringApplication.run(Application.class, args);
+        SpringApplication.run(AppApplication.class, args);
     }
 }
