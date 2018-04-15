@@ -1,4 +1,4 @@
-package io.yule.huobiauto.app;
+package io.yule.huobiauto;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
