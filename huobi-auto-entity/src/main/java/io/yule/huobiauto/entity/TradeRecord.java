@@ -24,9 +24,11 @@ public class TradeRecord implements Serializable {
 
     private String externalId;
 
-    private Timestamp delegateTime;
+    private BigDecimal deletgateAmount;
 
-    private BigDecimal currentAmount;
+    private BigDecimal dealAmount;
+
+    private Timestamp delegateTime;
 
     public String getId() {
         return id;
@@ -68,19 +70,27 @@ public class TradeRecord implements Serializable {
         this.externalId = externalId;
     }
 
+    public BigDecimal getDeletgateAmount() {
+        return deletgateAmount;
+    }
+
+    public void setDeletgateAmount(BigDecimal deletgateAmount) {
+        this.deletgateAmount = deletgateAmount;
+    }
+
+    public BigDecimal getDealAmount() {
+        return dealAmount;
+    }
+
+    public void setDealAmount(BigDecimal dealAmount) {
+        this.dealAmount = dealAmount;
+    }
+
     public Timestamp getDelegateTime() {
         return delegateTime;
     }
 
     public void setDelegateTime(Timestamp delegateTime) {
         this.delegateTime = delegateTime;
-    }
-
-    public BigDecimal getCurrentAmount() {
-        return currentAmount;
-    }
-
-    public void setCurrentAmount(BigDecimal currentAmount) {
-        this.currentAmount = currentAmount;
     }
 }

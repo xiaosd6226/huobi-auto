@@ -22,7 +22,7 @@ public class TradeTask implements Serializable {
 
     private String symbol;
 
-    private BigDecimal initAmount;
+    private BigDecimal tradeCount;
 
     private Integer tickSeconds;
 
@@ -60,12 +60,12 @@ public class TradeTask implements Serializable {
         this.symbol = symbol;
     }
 
-    public BigDecimal getInitAmount() {
-        return initAmount;
+    public BigDecimal getTradeCount() {
+        return tradeCount;
     }
 
-    public void setInitAmount(BigDecimal initAmount) {
-        this.initAmount = initAmount;
+    public void setTradeCount(BigDecimal tradeCount) {
+        this.tradeCount = tradeCount;
     }
 
     public Integer getTickSeconds() {

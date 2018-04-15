@@ -26,8 +26,6 @@ public class TradeTaskTickLog implements Serializable {
 
     private BigDecimal expectPrice;
 
-    private BigDecimal currentAmount;
-
     private String logType;
 
     public String getId() {
@@ -76,14 +74,6 @@ public class TradeTaskTickLog implements Serializable {
 
     public void setExpectPrice(BigDecimal expectPrice) {
         this.expectPrice = expectPrice;
-    }
-
-    public BigDecimal getCurrentAmount() {
-        return currentAmount;
-    }
-
-    public void setCurrentAmount(BigDecimal currentAmount) {
-        this.currentAmount = currentAmount;
     }
 
     public String getLogType() {
