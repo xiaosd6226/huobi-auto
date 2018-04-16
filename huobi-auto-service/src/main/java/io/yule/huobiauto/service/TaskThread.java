@@ -2,6 +2,7 @@ package io.yule.huobiauto.service;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
+import io.yule.huobiauto.entity.TradeRecord;
 import io.yule.huobiauto.entity.TradeTask;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -94,7 +95,8 @@ public class TaskThread implements Runnable {
                         }
                     }
                 }
-                LOG.info("交易余额：{} 冻结余额：{}", currBalance, frozenBalance);
+
+                LOG.info("交易余额：{} 冻结余额：{}", currBalance != null ? currBalance.toPlainString() : "0", frozenBalance != null ? frozenBalance.toPlainString() : "0");
                 this.taskService.updateBalance(taskId, currBalance, frozenBalance);
 
                 JSONObject joTradeDetail = this.huobiApiService.getTradeDetail(task.getSymbol());
@@ -160,7 +162,7 @@ public class TaskThread implements Runnable {
                         if (buy) {
                             //如果是买入成交，那么要等待价格满足条件时，创建卖出委托。
                             BigDecimal expectPrice = tradePrice.multiply(
-                                    task.getPriceChangeThresholdPercent().divide(BigDecimal.valueOf(100))
+                                    task.getPriceChangeThresholdPercent().divide(BigDecimal.valueOf(100), BigDecimal.ROUND_CEILING)
                             ).add(tradePrice);
 
                             this.createOrder(
@@ -171,10 +173,22 @@ public class TaskThread implements Runnable {
                             );
                         } else {
                             //如果是卖出成交，那么要等待价格满足条件时，创建买入委托。
+                            TradeRecord lastFinishedTradeRecord = this.taskService.findLastFinishedTradeRecord(this.taskId);
+                            BigDecimal expectPrice;
+                            if (lastFinishedTradeRecord == null) {
+                                expectPrice = currentPrice;
+                            } else {
+                                BigDecimal lastSellPrice = lastFinishedTradeRecord.getDelegateAmount();
+                                expectPrice =
+                                        lastSellPrice.subtract(lastSellPrice.multiply(
+                                                task.getPriceChangeThresholdPercent().divide(BigDecimal.valueOf(100), BigDecimal.ROUND_CEILING)
+                                        ));
+                            }
+
                             this.createOrder(
                                     spotAccountId,
                                     task,
-                                    currentPrice,
+                                    expectPrice,
                                     true
                             );
                         }

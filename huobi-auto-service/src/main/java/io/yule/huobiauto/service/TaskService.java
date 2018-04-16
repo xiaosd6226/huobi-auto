@@ -3,6 +3,7 @@ package io.yule.huobiauto.service;
 import io.yule.huobiauto.dao.TradeRecordDao;
 import io.yule.huobiauto.dao.TradeTaskDao;
 import io.yule.huobiauto.dao.TradeTaskTickLogDao;
+import io.yule.huobiauto.entity.EnumerationConstants;
 import io.yule.huobiauto.entity.TradeRecord;
 import io.yule.huobiauto.entity.TradeTask;
 import io.yule.huobiauto.entity.TradeTaskTickLog;
@@ -105,5 +106,14 @@ public class TaskService extends BaseService {
         this.tradeRecordDao.save(tr);
 
         return true;
+    }
+
+
+    public TradeRecord findLastFinishedTradeRecord(String taskId) {
+        return this.tradeRecordDao.findFirstByTaskIdAndOrderTypeAndOrderStateOrderByDelegateFinishedTimeDesc(
+                taskId,
+                EnumerationConstants.sellLimit,
+                EnumerationConstants.filled
+        );
     }
 }
