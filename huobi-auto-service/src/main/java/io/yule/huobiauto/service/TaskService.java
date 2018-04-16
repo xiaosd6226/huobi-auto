@@ -25,6 +25,13 @@ public class TaskService extends BaseService {
     @Resource
     private TradeTaskTickLogDao tradeTaskTickLogDao;
 
+    @Transactional(Transactional.TxType.REQUIRED)
+    public void updateCurrentOrderId(String taskId, String orderId) {
+        TradeTask task = this.tradeTaskDao.findOne(taskId);
+        task.setCurrentOrderId(orderId);
+        this.tradeTaskDao.save(task);
+    }
+
     @Transactional(Transactional.TxType.SUPPORTS)
     public TradeTask getTask(String id) {
         return this.tradeTaskDao.findOne(id);

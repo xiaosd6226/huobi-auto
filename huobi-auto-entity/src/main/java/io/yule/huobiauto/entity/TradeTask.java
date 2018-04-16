@@ -30,6 +30,8 @@ public class TradeTask implements Serializable {
 
     private String notifyEmail;
 
+    private String currentOrderId;
+
     public String getId() {
         return id;
     }
@@ -92,5 +94,13 @@ public class TradeTask implements Serializable {
 
     public void setNotifyEmail(String notifyEmail) {
         this.notifyEmail = notifyEmail;
+    }
+
+    public String getCurrentOrderId() {
+        return currentOrderId;
+    }
+
+    public void setCurrentOrderId(String currentOrderId) {
+        this.currentOrderId = currentOrderId;
     }
 }

@@ -22,7 +22,7 @@ public class TradeRecord implements Serializable {
 
     private String tradeType;
 
-    private String externalId;
+    private String orderId;
 
     private BigDecimal deletgateAmount;
 
@@ -62,12 +62,12 @@ public class TradeRecord implements Serializable {
         this.tradeType = tradeType;
     }
 
-    public String getExternalId() {
-        return externalId;
+    public String getOrderId() {
+        return orderId;
     }
 
-    public void setExternalId(String externalId) {
-        this.externalId = externalId;
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
     }
 
     public BigDecimal getDeletgateAmount() {

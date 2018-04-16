@@ -3,6 +3,7 @@ package io.yule.huobiauto.utils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.io.IOUtils;
+import org.apache.http.HttpHost;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -27,13 +28,27 @@ public final class HttpClientUtils {
             .setConnectionRequestTimeout(5000)
             .build();
 
-    public static ThreadLocal<HttpClient> createHttpClientThreadLocal() {
-        return ThreadLocal.withInitial(() -> HttpClientBuilder
-                .create()
-                .setDefaultRequestConfig(HC_REQ_CFG)
-                .build());
+    public static ThreadLocal<HttpClient> createHttpClientThreadLocal(String httpProxyHost, Integer httpProxyPort) {
+        return ThreadLocal.withInitial(() -> {
+            HttpClientBuilder builder = HttpClientBuilder
+                    .create()
+                    .setDefaultRequestConfig(HC_REQ_CFG);
+            if (httpProxyHost != null && !httpProxyHost.isEmpty()
+                    && httpProxyPort != null && httpProxyPort > 0) {
+                builder.setProxy(new HttpHost(httpProxyHost, httpProxyPort));
+            }
+            return builder
+                    .build();
+
+        });
     }
 
+    public static ThreadLocal<HttpClient> createHttpClientThreadLocal() {
+        return createHttpClientThreadLocal(
+                null,
+                null
+        );
+    }
 
     public static CloseableHttpResponse executeWithRetry(HttpClient hc, HttpUriRequest req, int retryTimes) {
 
@@ -57,19 +72,19 @@ public final class HttpClientUtils {
         throw new RuntimeException("请求多次仍然失败：" + req.getURI());
     }
 
-    public static JSONObject parseResponse(CloseableHttpResponse response)   {
-       try{
-           StringWriter sw = new StringWriter();
-           IOUtils.copy(response.getEntity().getContent(), sw, "utf-8");
-           sw.flush();
-           sw.close();
-           return JSON.parseObject(sw.toString());
-       }catch (Exception ex) {
-           if (ex instanceof RuntimeException) {
-               throw (RuntimeException)ex;
-           }
-           throw new RuntimeException(ex);
-       }
+    public static JSONObject parseResponse(CloseableHttpResponse response) {
+        try {
+            StringWriter sw = new StringWriter();
+            IOUtils.copy(response.getEntity().getContent(), sw, "utf-8");
+            sw.flush();
+            sw.close();
+            return JSON.parseObject(sw.toString());
+        } catch (Exception ex) {
+            if (ex instanceof RuntimeException) {
+                throw (RuntimeException) ex;
+            }
+            throw new RuntimeException(ex);
+        }
     }
 
     public static void closeResp(CloseableHttpResponse response) {
