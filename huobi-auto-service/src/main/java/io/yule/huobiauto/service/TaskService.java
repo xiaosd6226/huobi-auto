@@ -26,6 +26,11 @@ public class TaskService extends BaseService {
     private TradeTaskTickLogDao tradeTaskTickLogDao;
 
     @Transactional(Transactional.TxType.SUPPORTS)
+    public TradeTask getTask(String id) {
+        return this.tradeTaskDao.findOne(id);
+    }
+
+    @Transactional(Transactional.TxType.SUPPORTS)
     public List<TradeTask> findAllTasks() {
         Iterable<TradeTask> list = this.tradeTaskDao.findAll();
         if (list == null) {

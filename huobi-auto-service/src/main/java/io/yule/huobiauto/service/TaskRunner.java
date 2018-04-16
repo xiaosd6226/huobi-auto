@@ -7,6 +7,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -23,12 +24,20 @@ public class TaskRunner extends BaseService {
     @Resource
     private TaskService taskService;
 
+    @Resource
+    private HuobiApiService huobiApiService;
+
     private ExecutorService taskThreadPool =
             Executors.newFixedThreadPool(10);
 
     private Set<String> runningTaskIdSet = new HashSet<>();
 
-
+    public static void main(String[] args) throws Exception {
+        System.out.println(new Timestamp(1523846380248L));
+        double a=1.8175;
+        double b=1.8073;
+        System.out.println((a - b) / a*100);
+    }
 
     @Scheduled(fixedRate = 60 * 1000L)
     public void fetchAndRunTask() {
@@ -53,6 +62,7 @@ public class TaskRunner extends BaseService {
                     LOG.info("任务（{}）准备启动。", tradeTask.getId());
                     this.taskThreadPool.execute(new TaskThread(
                             this.taskService,
+                            this.huobiApiService,
                             tradeTask.getId(),
                             tradeTask.getTaskName(),
                             this.runningTaskIdSet

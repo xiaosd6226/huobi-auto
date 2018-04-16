@@ -54,15 +54,22 @@ public final class HttpClientUtils {
             }
         }
 
-        return null;
+        throw new RuntimeException("请求多次仍然失败：" + req.getURI());
     }
 
-    public static JSONObject parseResponse(CloseableHttpResponse response) throws IOException {
-        StringWriter sw = new StringWriter();
-        IOUtils.copy(response.getEntity().getContent(), sw, "utf-8");
-        sw.flush();
-        sw.close();
-        return JSON.parseObject(sw.toString());
+    public static JSONObject parseResponse(CloseableHttpResponse response)   {
+       try{
+           StringWriter sw = new StringWriter();
+           IOUtils.copy(response.getEntity().getContent(), sw, "utf-8");
+           sw.flush();
+           sw.close();
+           return JSON.parseObject(sw.toString());
+       }catch (Exception ex) {
+           if (ex instanceof RuntimeException) {
+               throw (RuntimeException)ex;
+           }
+           throw new RuntimeException(ex);
+       }
     }
 
     public static void closeResp(CloseableHttpResponse response) {
