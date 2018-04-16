@@ -28,6 +28,8 @@ public class TradeTask implements Serializable {
 
     private BigDecimal priceChangeThresholdPercent;
 
+    private String notifyEmail;
+
     public String getId() {
         return id;
     }
@@ -82,5 +84,13 @@ public class TradeTask implements Serializable {
 
     public void setPriceChangeThresholdPercent(BigDecimal priceChangeThresholdPercent) {
         this.priceChangeThresholdPercent = priceChangeThresholdPercent;
+    }
+
+    public String getNotifyEmail() {
+        return notifyEmail;
+    }
+
+    public void setNotifyEmail(String notifyEmail) {
+        this.notifyEmail = notifyEmail;
     }
 }

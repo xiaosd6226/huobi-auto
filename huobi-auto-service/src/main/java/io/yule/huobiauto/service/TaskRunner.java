@@ -1,6 +1,9 @@
 package io.yule.huobiauto.service;
 
 import io.yule.huobiauto.entity.TradeTask;
+import org.apache.commons.mail.DefaultAuthenticator;
+import org.apache.commons.mail.Email;
+import org.apache.commons.mail.SimpleEmail;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -37,6 +40,17 @@ public class TaskRunner extends BaseService {
         double a=1.8175;
         double b=1.8073;
         System.out.println((a - b) / a*100);
+
+        Email email = new SimpleEmail();
+        email.setHostName("smtp.163.com");
+        email.setSmtpPort(465);
+        email.setAuthenticator(new DefaultAuthenticator("18666293535@163.com", "chensj1987"));
+        email.setSSLOnConnect(true);
+        email.setFrom("18666293535@163.com");
+        email.setSubject("您好TestMail");
+        email.setMsg("换货This is a test mail ... :-)");
+        email.addTo("121330950@qq.com");
+        email.send();
     }
 
     @Scheduled(fixedRate = 60 * 1000L)
