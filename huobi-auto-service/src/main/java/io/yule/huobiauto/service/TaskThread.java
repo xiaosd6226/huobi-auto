@@ -130,7 +130,7 @@ public class TaskThread implements Runnable {
                     Timestamp createdAt = orderDetailData.getTimestamp("created-at");
                     Long aLong = orderDetailData.getLong("finished-at");
                     Timestamp finishedAt = aLong == null || aLong == 0 ? null : new Timestamp(aLong);
-                    LOG.info("当前订单（{}）状态：{} 类型：{} 成交价：{} 成交数量：{}",
+                    LOG.info("当前订单（{}）状态：{} 类型：{} 成交价：{} 数量：{}",
                             currentOrderId, orderState, buy ? "买入" : "卖出", tradePrice, tradeCount);
                     if (!orderState.equals(submitted) && !orderState.equals(filled)) {
                         LOG.warn("无法处理的订单状态。");
