@@ -36,6 +36,11 @@ public class EmailNotifyService {
     private ExecutorService threadPool = Executors.newFixedThreadPool(3);
 
     public void send(final String to, final String title, final String content) {
+
+        if (smtp == null || smtp.trim().isEmpty()) {
+            return;
+        }
+
         if (to == null || to.trim().isEmpty()) {
             return;
         }
