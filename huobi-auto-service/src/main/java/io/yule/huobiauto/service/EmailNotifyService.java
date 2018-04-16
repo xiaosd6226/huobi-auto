@@ -36,6 +36,9 @@ public class EmailNotifyService {
     private ExecutorService threadPool = Executors.newFixedThreadPool(3);
 
     public void send(final String to, final String title, final String content) {
+        if (to == null || to.trim().isEmpty()) {
+            return;
+        }
         this.threadPool.execute(
                 () -> {
                     try {
@@ -47,11 +50,11 @@ public class EmailNotifyService {
                                 new DefaultAuthenticator(this.from, this.pwd));
                         email.setSSLOnConnect(this.ssl);
                         email.setFrom(this.from);
-                        email.setSubject(title);
+                        email.setSubject("【huobi-auto】" + title);
                         email.setMsg(content);
                         email.addTo(to);
                         email.send();
-                        LOG.info("邮件发生成功。");
+                        LOG.info("邮件发送成功。");
                     } catch (Exception ex) {
                         LOG.info("邮件发送失败：{}", ex.getMessage());
                     }

@@ -20,6 +20,8 @@ public class TradeTask implements Serializable {
 
     private String taskName;
 
+    private String moneyType;
+
     private String symbol;
 
     private BigDecimal tradeCount;
@@ -31,6 +33,10 @@ public class TradeTask implements Serializable {
     private String notifyEmail;
 
     private String currentOrderId;
+
+    private BigDecimal currentBalance;
+
+    private BigDecimal frozenBalance;
 
     public String getId() {
         return id;
@@ -54,6 +60,14 @@ public class TradeTask implements Serializable {
 
     public void setTaskName(String taskName) {
         this.taskName = taskName;
+    }
+
+    public String getMoneyType() {
+        return moneyType;
+    }
+
+    public void setMoneyType(String moneyType) {
+        this.moneyType = moneyType;
     }
 
     public String getSymbol() {
@@ -102,5 +116,21 @@ public class TradeTask implements Serializable {
 
     public void setCurrentOrderId(String currentOrderId) {
         this.currentOrderId = currentOrderId;
+    }
+
+    public BigDecimal getCurrentBalance() {
+        return currentBalance;
+    }
+
+    public void setCurrentBalance(BigDecimal currentBalance) {
+        this.currentBalance = currentBalance;
+    }
+
+    public BigDecimal getFrozenBalance() {
+        return frozenBalance;
+    }
+
+    public void setFrozenBalance(BigDecimal frozenBalance) {
+        this.frozenBalance = frozenBalance;
     }
 }

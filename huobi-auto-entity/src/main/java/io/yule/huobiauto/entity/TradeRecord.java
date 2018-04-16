@@ -20,15 +20,19 @@ public class TradeRecord implements Serializable {
 
     private Timestamp createdDate;
 
-    private String tradeType;
-
     private String orderId;
 
-    private BigDecimal deletgateAmount;
+    private String orderState;
+
+    private String orderType;
+
+    private BigDecimal delegateAmount;
 
     private BigDecimal dealAmount;
 
-    private Timestamp delegateTime;
+    private Timestamp delegateCreatedTime;
+
+    private Timestamp delegateFinishedTime;
 
     public String getId() {
         return id;
@@ -54,14 +58,6 @@ public class TradeRecord implements Serializable {
         this.createdDate = createdDate;
     }
 
-    public String getTradeType() {
-        return tradeType;
-    }
-
-    public void setTradeType(String tradeType) {
-        this.tradeType = tradeType;
-    }
-
     public String getOrderId() {
         return orderId;
     }
@@ -70,12 +66,28 @@ public class TradeRecord implements Serializable {
         this.orderId = orderId;
     }
 
-    public BigDecimal getDeletgateAmount() {
-        return deletgateAmount;
+    public String getOrderState() {
+        return orderState;
     }
 
-    public void setDeletgateAmount(BigDecimal deletgateAmount) {
-        this.deletgateAmount = deletgateAmount;
+    public void setOrderState(String orderState) {
+        this.orderState = orderState;
+    }
+
+    public String getOrderType() {
+        return orderType;
+    }
+
+    public void setOrderType(String orderType) {
+        this.orderType = orderType;
+    }
+
+    public BigDecimal getDelegateAmount() {
+        return delegateAmount;
+    }
+
+    public void setDelegateAmount(BigDecimal delegateAmount) {
+        this.delegateAmount = delegateAmount;
     }
 
     public BigDecimal getDealAmount() {
@@ -86,11 +98,19 @@ public class TradeRecord implements Serializable {
         this.dealAmount = dealAmount;
     }
 
-    public Timestamp getDelegateTime() {
-        return delegateTime;
+    public Timestamp getDelegateCreatedTime() {
+        return delegateCreatedTime;
     }
 
-    public void setDelegateTime(Timestamp delegateTime) {
-        this.delegateTime = delegateTime;
+    public void setDelegateCreatedTime(Timestamp delegateCreatedTime) {
+        this.delegateCreatedTime = delegateCreatedTime;
+    }
+
+    public Timestamp getDelegateFinishedTime() {
+        return delegateFinishedTime;
+    }
+
+    public void setDelegateFinishedTime(Timestamp delegateFinishedTime) {
+        this.delegateFinishedTime = delegateFinishedTime;
     }
 }

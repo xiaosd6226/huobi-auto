@@ -1,7 +1,9 @@
 package io.yule.huobiauto.service;
 
+import io.yule.huobiauto.dao.TradeRecordDao;
 import io.yule.huobiauto.dao.TradeTaskDao;
 import io.yule.huobiauto.dao.TradeTaskTickLogDao;
+import io.yule.huobiauto.entity.TradeRecord;
 import io.yule.huobiauto.entity.TradeTask;
 import io.yule.huobiauto.entity.TradeTaskTickLog;
 import org.springframework.stereotype.Component;
@@ -19,18 +21,15 @@ import java.util.List;
 @Component
 public class TaskService extends BaseService {
 
+
     @Resource
     private TradeTaskDao tradeTaskDao;
 
     @Resource
     private TradeTaskTickLogDao tradeTaskTickLogDao;
 
-    @Transactional(Transactional.TxType.REQUIRED)
-    public void updateCurrentOrderId(String taskId, String orderId) {
-        TradeTask task = this.tradeTaskDao.findOne(taskId);
-        task.setCurrentOrderId(orderId);
-        this.tradeTaskDao.save(task);
-    }
+    @Resource
+    private TradeRecordDao tradeRecordDao;
 
     @Transactional(Transactional.TxType.SUPPORTS)
     public TradeTask getTask(String id) {
@@ -46,23 +45,65 @@ public class TaskService extends BaseService {
         return (List<TradeTask>) list;
     }
 
-    @Transactional(Transactional.TxType.REQUIRED)
+    @Transactional(Transactional.TxType.REQUIRES_NEW)
     public void createTradeTickLog(
             String taskId,
             BigDecimal price,
-            Timestamp priceTime,
-            BigDecimal expectPrice,
-            String logType
+            Timestamp priceTime
     ) {
         TradeTaskTickLog tt = new TradeTaskTickLog();
         tt.setId(createId());
         tt.setCreatedDate(now());
         tt.setCurrentPrice(price);
         tt.setPriceTime(priceTime);
-        tt.setExpectPrice(expectPrice);
-        tt.setLogType(logType);
         tt.setTaskId(taskId);
         this.tradeTaskTickLogDao.save(tt);
     }
 
+
+    @Transactional(Transactional.TxType.REQUIRES_NEW)
+    public void updateCurrentOrderId(String taskId, String orderId) {
+        TradeTask task = this.tradeTaskDao.findOne(taskId);
+        task.setCurrentOrderId(orderId);
+        this.tradeTaskDao.save(task);
+    }
+
+    @Transactional(Transactional.TxType.REQUIRES_NEW)
+    public void updateBalance(String taskId, BigDecimal balance, BigDecimal frozenBalance) {
+        TradeTask task = this.tradeTaskDao.findOne(taskId);
+        task.setCurrentBalance(balance);
+        task.setFrozenBalance(frozenBalance);
+        this.tradeTaskDao.save(task);
+    }
+
+    @Transactional(Transactional.TxType.REQUIRES_NEW)
+    public boolean createTradeRecord(String taskId,
+                                     String orderId,
+                                     String orderState,
+                                     String orderType,
+                                     BigDecimal price,
+                                     BigDecimal count,
+                                     Timestamp finishedTs,
+                                     Timestamp createdTs
+    ) {
+
+        if (this.tradeRecordDao.countByOrderIdAndOrderState(orderId, orderState) > 0) {
+            return false;
+        }
+
+        TradeRecord tr = new TradeRecord();
+        tr.setId(super.createId());
+        tr.setCreatedDate(now());
+        tr.setTaskId(taskId);
+        tr.setOrderId(orderId);
+        tr.setDealAmount(count);
+        tr.setDelegateAmount(price);
+        tr.setDelegateCreatedTime(createdTs);
+        tr.setDelegateFinishedTime(finishedTs);
+        tr.setOrderState(orderState);
+        tr.setOrderType(orderType);
+        this.tradeRecordDao.save(tr);
+
+        return true;
+    }
 }

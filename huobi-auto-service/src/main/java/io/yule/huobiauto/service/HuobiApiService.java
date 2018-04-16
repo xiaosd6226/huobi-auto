@@ -21,6 +21,9 @@ import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 
+import static io.yule.huobiauto.entity.EnumerationConstants.buyLimit;
+import static io.yule.huobiauto.entity.EnumerationConstants.sellLimit;
+
 /**
  * Created by chensijiang on 2018/4/15 下午4:55.
  */
@@ -101,9 +104,9 @@ public class HuobiApiService {
         Map<String, String> params = new HashMap<>();
         params.put("symbol", symbol);
         params.put("account-id", accountId);
-        params.put("amount", amount.stripTrailingZeros().toPlainString());
-        params.put("price", price.stripTrailingZeros().toPlainString());
-        params.put("type", buy ? "buy-limit" : "sell-limit");
+        params.put("amount", amount.setScale(6, BigDecimal.ROUND_CEILING).stripTrailingZeros().toPlainString());
+        params.put("price", price.setScale(6, BigDecimal.ROUND_CEILING).stripTrailingZeros().toPlainString());
+        params.put("type", buy ? buyLimit : sellLimit);
         String sign = SignUtils.createSign(
                 "POST",
                 API_HOST,
@@ -255,8 +258,8 @@ public class HuobiApiService {
     }
 
 
-    public JSONObject getAccountBalance(String id, String type) {
-        LOG.info("获取账户余额：{} {}", id, type);
+    public JSONObject getAccountBalance(String id) {
+        LOG.info("获取账户余额：{}", id);
         HttpClient hc = hcThreadLocal.get();
         String url = "/v1/account/accounts/" + id + "/balance";
         Timestamp ts = SignUtils.utcTimestamp();
@@ -282,7 +285,7 @@ public class HuobiApiService {
         try {
             resp = HttpClientUtils.executeWithRetry(hc, req, 3);
             JSONObject jo = HttpClientUtils.parseResponse(resp);
-            LOG.info("账户余额返回：\n{}", JSON.toJSONString(jo, true));
+            LOG.info("账户余额查询完成");
             return jo;
         } finally {
             HttpClientUtils.closeResp(resp);

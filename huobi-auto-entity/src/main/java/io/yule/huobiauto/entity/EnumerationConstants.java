@@ -5,33 +5,24 @@ package io.yule.huobiauto.entity;
  */
 public interface EnumerationConstants {
 
-    /**
-     * 交易Tick日志类型：等待买入。
-     */
-    String tttlt_wait_buy = "tttlt_wait_buy";
 
     /**
-     * 交易Tick日志类型：等待卖出。
+     * 成交。
      */
-    String tttlt_wait_sell = "tttlt_wait_sell";
+    String filled = "filled";
 
     /**
-     * 交易类型：创建买入委托。
+     * 已提交。
      */
-    String trt_create_buy_delegate = "trt_create_buy_delegate";
+    String submitted = "submitted";
 
     /**
-     * 交易类型：创建卖出委托。
+     * 限价买入。
      */
-    String trt_create_sell_delegate = "trt_create_sell_delegate";
+    String buyLimit = "buy-limit";
 
     /**
-     * 交易类型：买入委托完成。
+     * 限价卖出。
      */
-    String trt_buy_delegate_complete = "trt_buy_delegate_complete";
-
-    /**
-     * 交易类型：卖出委托完成。
-     */
-    String trt_sell_delegate_complete = "trt_sell_delegate_complete";
+    String sellLimit = "sell-limit";
 }

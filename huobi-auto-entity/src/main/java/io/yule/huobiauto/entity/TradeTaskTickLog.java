@@ -24,10 +24,6 @@ public class TradeTaskTickLog implements Serializable {
 
     private Timestamp priceTime;
 
-    private BigDecimal expectPrice;
-
-    private String logType;
-
     public String getId() {
         return id;
     }
@@ -68,19 +64,4 @@ public class TradeTaskTickLog implements Serializable {
         this.priceTime = priceTime;
     }
 
-    public BigDecimal getExpectPrice() {
-        return expectPrice;
-    }
-
-    public void setExpectPrice(BigDecimal expectPrice) {
-        this.expectPrice = expectPrice;
-    }
-
-    public String getLogType() {
-        return logType;
-    }
-
-    public void setLogType(String logType) {
-        this.logType = logType;
-    }
 }
